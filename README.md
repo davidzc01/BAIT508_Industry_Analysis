@@ -4,7 +4,7 @@ MBAN 2024 BA1 Team 32
 
 David Chen | Student Number: 30409156 | Email: zeyuchen97@hotmail.com
 
-Wanting Xu | Student Number: 81971392 | Email: [include your email here]
+Wanting Xu | Student Number: 81971392 | Email: xuwanting.hk@gmail.com
 
 ## Project Overview
 
@@ -27,15 +27,8 @@ description of each datasets goes here
 Excel files in data folder are ignored due to Github's file size limitation
 
 ##  Project Explaination by Steps
-Industry Data Analysis -- Code Methods Explaination
-
-Team members:
-Member 1: Zeyu Chen, xxxxxx, xxxx@xxx.com, BA1
-Member 2: Wanting Xu, 81971392, xuwanting.hk@gmail.com, BA1
-
-
-Part I.
-A.
+### Part I.
+#### A.
     1.
     2.
     3.
@@ -43,7 +36,7 @@ A.
         b.
         c.
 
-B.
+#### B.
     1.
     2.
     3.
@@ -52,24 +45,24 @@ B.
     6.
 
 
-Part II.
-C.
+### Part II.
+#### C.
     1.
     2.
     3.
 
-D.
+#### D.
     1.
     2.
     3.
 
-E.
+#### E.
     1.
     2.
 
 
-Part III.
-F.
+### Part III.
+#### F.
     1.
     2.
     3.
