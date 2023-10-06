@@ -13,6 +13,8 @@ Wanting Xu | Student Number: 81971392 | Email: xuwanting.hk@gmail.com
 The goal of this project is to conduct an in-depth analysis of public US firms within selected industry sector(s) using various data analyses and natural language processing (NLP) techniques that we learned in BAIT 508. Each team will choose at least one industry sector to investigate and utilize multiple datasets to extract valuable industry insights from the data.
 
 ### Team and Roles
+Coding: Collaborated contribution (led by David Chen) 
+Write-up: Collaborated contribution (led by Wanting Xu)
 
 ### Credits
 mention Gene and TAs here
