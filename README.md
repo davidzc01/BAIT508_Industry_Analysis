@@ -81,11 +81,14 @@ This project uses 3 datasets provided by the BAIT 508 instruction team: `2020_10
 #### A. Industry Sector Selection and Data Filtering
 ##### 1. Industry Sector Selection
 
+We choose the industry code 51 and store it in the variable `focal_group`.
+
 We defined a function to replace the `df[df[col] == val]` logic all over the code to improve code reuseability:
 ```{python}
 def filter_by_col_value(df, col, value):
     return df[df[col] == value]
 ```
+We use this to return the data frame that shows our selected industry and its description from the dataset `major_groups.csv`.
 
 ##### 2
 
@@ -97,10 +100,43 @@ def filter_industry_groups(df, focal_group):
 ##### 3
 
 We created this UDF to count the number of unique firms in the data frame. The function takes the data frame and the column name as input and returns the number of unique firms in the column.
+The DataFrame().unique() method deal with a single colummn of a DataFrame and returns all unique elements of a column to a list.
+We use `len()` function to count the number of elements in the list. We can also use the `nunique()` method interchangeably.
 ```{python}
 def count_unique_focal_firms_records(df, col):
     return len(df[col].unique())
 ```
+
+###### 3a
+We use the function defined above to get the number of unique `fyear` observations from the `df_focal_public_firms` data frame, and print it our in a sentence.
+```{python}
+num_of_unique_fyears = count_unique_focal_firms_records(df_focal_public_firms, 'fyear')
+print(f'There are {num_of_unique_fyears} unique firm-year ("fyear") observations in the filtered dataset')
+```
+
+###### 3b
+We substitute the function input `fyear` with `gvkey` to count the number of unique firms, with the same method used in 3a.
+```{python}
+num_of_unique_firms = count_unique_focal_firms_records(df_focal_public_firms, 'gvkey')
+print(f'There are {num_of_unique_firms} unique firms in the filtered dataset')
+```
+
+###### 3c
+###### step 1
+We use groupby() method with input `gvkey` to group values for unique firms, and use `[['fyear]]` to select only the fiscal year column to aggregate calculation.
+The `count()` method is used to count the number of unique fiscal year observation a certain firm has.
+```{python}
+gvKeyYear = df_focal_public_firms.groupby('gvkey')[['fyear']].count()
+```
+###### step 2
+After we get the unique `'fyear'` count, we further filter the data frame by selecting only the rows that `'fyear` value equals 27. We do this by leveraging the function `filter_by_col_value` we defined above, which takes in three inputs accordingly.
+Then, apply `len()` function to get the number of rows in the filtered data frame.
+Finally, we print out the result in a complete sentence.
+```{python}
+num_firm_with_records = len(filter_by_col_value(gvKeyYear, 'fyear', 27))
+print(f'There are {num_firm_with_records} firms in the filtered dataset have records over all 27 years (1994-2020)')
+```
+
 #### B. Preliminary Analysis
 1. ...
    We defined helper functions to find the top n firms in the data frame by a given column. The function takes the column name, the number of firms to return, and the fiscal year as input and returns a data frame containing the top n firms in the given fiscal year. If the fiscal year is not specified, the function will return the top n firms in all fiscal years.
