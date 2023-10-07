@@ -81,61 +81,72 @@ This project uses 3 datasets provided by the BAIT 508 instruction team: `2020_10
 #### A. Industry Sector Selection and Data Filtering
 ##### 1. Industry Sector Selection
 
-We choose the industry code 51 and store it in the variable `focal_group`.
+Among major industry sectors we choose the **wholesale trade-non-durable goods** industry (`major_group = 51`) as our focal group in the project and store its `major_group` code in the variable `focal_group`.
 
 We defined a function to replace the `df[df[col] == val]` logic all over the code to improve code reuseability:
 ```{python}
 def filter_by_col_value(df, col, value):
     return df[df[col] == value]
 ```
-We use this to return the data frame that shows our selected industry and its description from the dataset `major_groups.csv`.
+We used this to return the data frame that shows our selected industry and its description from the dataset `major_groups.csv`.
 
-##### 2
+```{python}
+filter_by_col_value(df_major_groups, 'major_group', focal_group)
+```
+
+##### 2 Filtering Data to Focus on Firms Belonging to the Focal Industry Sector
 
 We defined UDF to filter the `df_public_firms` by the major industry group code. The function takes the major industry group code (first 2 digit of the sic) as input and returns a data frame containing only the firms in the major industry group.
+
 ```{python}
 def filter_industry_groups(df, focal_group):
     return df[df['sic']//100 == focal_group]
 ```
-##### 3
 
-We created this UDF to count the number of unique firms in the data frame. The function takes the data frame and the column name as input and returns the number of unique firms in the column.
-The DataFrame().unique() method deal with a single colummn of a DataFrame and returns all unique elements of a column to a list.
-We use `len()` function to count the number of elements in the list. We can also use the `nunique()` method interchangeably.
+We used this function to return a new data frame named `df_focal_public_firms` that contains only the firms in the focal industry group. The new data frame contains 2,369 records and 12 columns.
+##### 3 Answering Questions With Filtered Dataset (`df_focal_public_firms`)
+
+The function we created takes the data frame and the column name as input and returns the number of unique firms in the column:
+   - The `DataFrame().unique()` method deal with a single colummn of a DataFrame and returns all unique elements of a column to a list
+   - We used `len()` function to count the number of elements in the list. We can also use the `nunique()` method interchangeably.
+
 ```{python}
 def count_unique_focal_firms_records(df, col):
     return len(df[col].unique())
 ```
 
-###### 3a
-We use the function defined above to get the number of unique `fyear` observations from the `df_focal_public_firms` data frame, and print it our in a sentence.
+###### 3a. How many unique firm-year (`fyear`) observations are there in the filtered dataset?
+We used the function defined above to get the number of unique `fyear` observations from the `df_focal_public_firms` data frame, and print it our in a sentence.
+
 ```{python}
 num_of_unique_fyears = count_unique_focal_firms_records(df_focal_public_firms, 'fyear')
-print(f'There are {num_of_unique_fyears} unique firm-year ("fyear") observations in the filtered dataset')
 ```
 
-###### 3b
-We substitute the function input `fyear` with `gvkey` to count the number of unique firms, with the same method used in 3a.
-```{python}
-num_of_unique_firms = count_unique_focal_firms_records(df_focal_public_firms, 'gvkey')
-print(f'There are {num_of_unique_firms} unique firms in the filtered dataset')
-```
+In the filtered dataset, there are 27 unique firm-year observations.
 
-###### 3c
+###### 3b. How many unique firms are there in the filtered dataset?
+We substituted the function input `fyear` with `gvkey` to count the number of unique firms, with the same function used in 3a.
+
+In the filtered dataset, there are 227 unique firms.
+
+###### 3c. How many firms in the filtered dataset have records over all 27 years (1994-2020)?
 ###### step 1
-We use groupby() method with input `gvkey` to group values for unique firms, and use `[['fyear]]` to select only the fiscal year column to aggregate calculation.
-The `count()` method is used to count the number of unique fiscal year observation a certain firm has.
+We used `groupby()` method to group the data frame by `gvkey` and count the number of unique `fyear` observations for each firm with `count()` method. Then we save the result in a new data frame named `df_gvkey_year`.
+
 ```{python}
-gvKeyYear = df_focal_public_firms.groupby('gvkey')[['fyear']].count()
+df_gvkey_year = df_focal_public_firms.groupby('gvkey')[['fyear']].count()
 ```
 ###### step 2
-After we get the unique `'fyear'` count, we further filter the data frame by selecting only the rows that `'fyear` value equals 27. We do this by leveraging the function `filter_by_col_value` we defined above, which takes in three inputs accordingly.
-Then, apply `len()` function to get the number of rows in the filtered data frame.
-Finally, we print out the result in a complete sentence.
+We further filtered `df_gvkey_year` in previous step by selecting only the rows that `fyear` value equals 27 with the function `filter_by_col_value` we defined above.
+Then, we applied `len()` function to get the number of rows in the filtered data frame.
+Finally, we printed out the result in a complete sentence.
+
 ```{python}
-num_firm_with_records = len(filter_by_col_value(gvKeyYear, 'fyear', 27))
+num_firm_with_records = len(filter_by_col_value(df_gvkey_year, 'fyear', 27))
 print(f'There are {num_firm_with_records} firms in the filtered dataset have records over all 27 years (1994-2020)')
 ```
+
+In the filtered dataset, there are 4 firms have records over all 27 years (1994-2020).
 
 #### B. Preliminary Analysis
 1. ...
@@ -349,6 +360,7 @@ cols = ['fyear', 'prcc_c', 'roa', 'sale', 'asset']
 df_focal_firm_historical = filter_by_col_value(df_focal_public_firms, 'gvkey', focal_firm_gvkey)[cols]
 ```
 Then we visualized the focal firm's historical performance with line charts:
+
 ![stock-price-over-time](./graphs/stock-price-over-time.png)
 
 ![roa-over-time](./graphs/roa-over-time.png)
