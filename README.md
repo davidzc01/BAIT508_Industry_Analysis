@@ -138,8 +138,11 @@ print(f'There are {num_firm_with_records} firms in the filtered dataset have rec
 ```
 
 #### B. Preliminary Analysis
-1. ...
+# Prep step
    We defined helper functions to find the top n firms in the data frame by a given column. The function takes the column name, the number of firms to return, and the fiscal year as input and returns a data frame containing the top n firms in the given fiscal year. If the fiscal year is not specified, the function will return the top n firms in all fiscal years.
+   First step of the function (if loop) seleted the rows whose `'fyear'` column value equals desired fiscal year input `fy` from the filtered data frame `df_focal_public_firms`.
+   Second step use `groupby()` method to get the maximum value (`max()`) of desired aspect (`'column'` input).
+   Thrid step apply the `head()` and `sorted_values()` methods at the end to get the top 10 value.
    ```{python}
    def find_top_n_firms(column, n, fy = 0):
     df = df_focal_public_firms
@@ -148,11 +151,12 @@ print(f'There are {num_firm_with_records} firms in the filtered dataset have rec
     df_grouped = df.groupby('gvkey').max()[[column, 'conm']]
     return df_grouped.sort_values(by=column, ascending=False).head(n)
    ```
-2. ...
-3. ...
-   1. ...
-   2. ...
-   3. ...
+1. Use the function defined above, with inputs `'prcc_c'`, `10`, and `2020` respectively.
+2. Use the function defined above, with inputs `'prcc_c'`,and `10` respectively. `'fy'` is 0 by default.
+3. 
+    ```
+    df_focal_public_firms.groupby('location')[['gvkey']].nunique().sort_values(by='gvkey', ascending=False).head(10)
+    ```
 4. ...
    ![sector-avg-pricc-over-year](./graphs/sector-avg-prcc-over-year.png)
 5. ...
