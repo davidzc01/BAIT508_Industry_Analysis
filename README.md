@@ -342,6 +342,7 @@ Based on our wordclouds we selected 'product', 'food', and 'oil' as our represen
 
 ### Part 3. Comprehensive Analysis of One Sample Firm
 #### F. Firm Analysis and Strategy Suggestion
+#### F.I. Coding part
 ##### 1. Firm Selection and Competing Firms
 Among the firms in our focal major industry we picked SYSCO CORP (gvkey: 10247) as our focal firm. To find its competing firms, we create the firm-level embedings with `DocumentSimilarity.py` prepared by the BAIT 508 instruction team and the model we trained in previous steps. Then we used `most_similar` method of `DocumentSimilarity` class to get the 5 most similar firms to our focal firm. The competing firms are:
    - UNITED NATURAL FOODS INC (gvkey: 63927)
@@ -388,3 +389,65 @@ Then we visualized the focal firm's historical performance with line charts:
 ![revenue-over-time](./graphs/revenue-over-time.png)
 
 ![asset-over-time](./graphs/asset-over-time.png)
+
+#### F.II. Analysis Part
+
+Chosen topic: Competition Analysis and Strategy Suggestions
+Chosen question: Question F.2. Compare the revenue, market share, and ROA of the focal firm to its competitors and provide suggestions accordingly.
+
+**Section 1. Overview of Firms in Wholesale Non-Durable Goods Sector**
+
+| GVKEY | Firm Name                        | Revenue ($M) | ROA        | Market Share  |
+|-------|----------------------------------|--------------|------------|---------------|
+| 6     | CHEFS' WAREHOUSE INC             | 1111.631     | -0.085088  | 0.010645      |
+| 9     | SPARTANNASH CO                   | 9348.485     | 0.033334   | 0.089521      |
+| 17    | CORE MARK HOLDING CO INC         | 13617.100    | 0.032332   | 0.130397      |
+| 31    | PRESTIGE CONSUMER HEALTHCARE     | 943.365      | 0.048022   | 0.009034      |
+| 44    | SYSCO CORP                       | 52893.310    | 0.009522   | 0.506504      |
+| 45    | UNITED NATURAL FOODS INC         | 26514.267    | -0.036133  | 0.253900      |
+
+
+**Section 2. Competitive Analysis**
+
+* **Revenue**: 
+  - Sysco Corp is the leading revenue generator with a revenue of $52,893.310M. When compared with the second player, UNITED NATURAL FOODS INC, Sysco's revenue is roughly twice as much ($52,893.310M vs. $26,514.267M). Compared to the third player, CORE MARK HOLDING CO INC, Sysco’s revenue is approximately four times greater. This indicates that Sysco has a commanding presence in terms of generating sales and reaching customers.
+
+* **Market Share**: 
+  - **Market Leaders**: Firms with a market share greater than 20%. This category only includes Sysco Corp (50.65%) and UNITED NATURAL FOODS INC (25.39%). Their combined market share signifies that they hold a dominant position in the industry.
+  
+  - **Challengers**: Firms with a market share between 5% and 20%. In this category, we have CORE MARK HOLDING CO INC (13.04%) and SPARTANNASH CO (8.95%). These firms have a respectable presence but are notably smaller than the market leaders.
+  
+  - **Long-Tail Players**: Firms with a market share less than 5%. This category includes CHEFS' WAREHOUSE INC (1.06%) and PRESTIGE CONSUMER HEALTHCARE (0.90%). Their low market share signifies they might be serving niche segments or might be regional players with limited scale compared to the leaders and challengers.
+
+* **ROA (Return on Assets)**: 
+  - **High Performance (ROA > 3%)**: This includes PRESTIGE CONSUMER HEALTHCARE (4.80%), SPARTANNASH CO (3.33%), and CORE MARK HOLDING CO INC (3.23%).
+  
+  - **Average Performance (ROA between 0% and 3%)**: This category only includes Sysco Corp with an ROA of 0.95%. Given its size, this indicates potential inefficiencies in asset utilization.
+  
+  - **Low Performance (ROA < 0%)**: This category includes CHEFS' WAREHOUSE INC (-8.51%) and UNITED NATURAL FOODS INC (-3.61%), suggesting significant operational challenges or external pressures affecting profitability.
+
+* **Overall Performance Assessment**: 
+  - While Sysco clearly leads in revenue, its ROA performance is suboptimal. This could be a result of high asset base, potential inefficiencies, or investments that have yet to yield returns. Conversely, the second revenue runner-up, UNITED NATURAL FOODS INC, is also underperforming in terms of ROA. The presence of high ROA but low market share for PRESTIGE CONSUMER HEALTHCARE might suggest a light-asset operating model, indicating they might be leveraging efficiencies, perhaps through outsourcing, reduced infrastructure, or a unique business model that does not require significant asset holdings.
+
+---
+
+This enhanced analysis provides a more detailed perspective of each firm's position in the wholesale non-durable goods industry. It is essential for firms to not only understand where they stand but also understand the operational and strategic nuances of their competitors.
+
+
+**Section 3. Strategy Suggestions for SYSCO**
+
+* **Revenue and Market Share**: Sysco's dominant position in revenue and market share suggests a strong hold in the industry. However, there's always a risk of becoming complacent. Sysco should continuously innovate its offerings and strengthen relationships with suppliers and customers. Exploring new markets and diversifying product lines can be an avenue for growth.
+
+* **Improving ROA**: Sysco's ROA is relatively low, especially compared to smaller competitors like PRESTIGE CONSUMER HEALTHCARE. This indicates room for improvement in asset management and efficiency. A comprehensive review of asset utilization, investments, and operational efficiencies can enhance this metric.
+
+* **Threat from Competitors**: While Sysco enjoys a substantial lead, competitors like UNITED NATURAL FOODS INC and CORE MARK HOLDING CO INC are significant players. Monitoring their strategies, and staying alert to industry shifts, is crucial.
+
+* **Leverage Economies of Scale**: Sysco's large scale offers opportunities to negotiate better terms with suppliers, optimize logistics, and implement cost-saving technologies. Investing in supply chain technologies and infrastructure can further solidify its position.
+
+* **Focus on Sustainability and ESG**: Given the current global trend, Sysco can further differentiate itself by integrating sustainability into its operations and committing to Environmental, Social, and Governance (ESG) goals.
+
+In conclusion, Sysco's dominance in the wholesale non-durable goods industry is clear. However, continuously refining strategies based on competition analysis is essential to maintain and expand its leadership position.
+
+
+---
+End of report. Thank you!
