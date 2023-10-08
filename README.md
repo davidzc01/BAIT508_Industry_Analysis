@@ -54,6 +54,9 @@ This project uses 3 datasets provided by the BAIT 508 instruction team: `2020_10
   - `major_groups.csv`: contains 83 major industry groups' corresponding codes and their descriptions. The dataset contains following columns:
     - `major_group`: corresponding code to the major industry group, the code corresponds to the first two digits of each firm’s SIC code.
     - `description`: the name of the industry group.
+
+<div style="page-break-after: always;"></div>
+
   - `public_firms.csv`: contains the 209212 records of public firms. The dataset contains following columns:
     - `gvkey`: the unique identifier for each firm.
     - `fyear`: fisical year in which the financial data was reported.
@@ -173,6 +176,8 @@ def find_top_n_firms(column, n, fy = 0):
 ##### <font size = 4>1. What are the top 10 firms with the highest stock price (column "prcc_c") in the year 2020?</font>
 Use the function defined above, with inputs `'prcc_c'`, `10`, and `2020` respectively.
 
+<div style="page-break-after: always;"></div>
+
 We get following result:
 
 | gvkey  | prcc_c  | conm                      |
@@ -206,7 +211,9 @@ We get following result:
 | 18468	 | 43464.000  | PLAINS GP HOLDINGS LP       |
 | 12471	 | 43386.389  | WORLD FUEL SERVICES CORP    |
 
-##### <font size = 4>3. What is the geographical distribution (`location`) of all the firms? List the top 10 locations?</font>
+<div style="page-break-after: always;"></div>
+
+##### <font size = 4>3. What is the geographical distribution (`location`) of all the firms?</font>
 Use `groupby()` to group values by `'location'`, and then use `nunique()` method on th column `'gvkey'` to count how many unique firms are located in certain location.
 Then, apply `sort_values()` and `head()` methods to get the top 10 locations.
 
@@ -228,6 +235,8 @@ We get following result:
 | ISR      |  2    |
 | CHE      |  1    |
 | CYN      |  1    |
+
+<div style="page-break-after: always;"></div>
 
 ##### <font size = 4>4. Create a line chart to show the average stock price (`prcc_c`) in the selected sector(s) across the years</font>
 
@@ -280,6 +289,8 @@ def find_most_affected_firm_during_period(start_year, end_year):
 
 The firm most affected between 2007 and 2008 is CENTRAL ENERGY PARTNERS LP (gvkey: 161977) with a stock price drop around 92.71%.
 
+<div style="page-break-after: always;"></div>
+
 ##### <font size = 4>6. Plot the average Return on Assets (ROA) for the firms located in the “USA” across the years</font>
    
 Use previously defined function `filter_by_col_value` to get data of the firms located in `'USA'`, add a column `'roa'` through calculations.
@@ -322,6 +333,12 @@ def clean_text(text):
 
   return ' '.join(clean_words)
 ```
+The data frame with cleaned text looks like this:
+
+![df-2020-10k-item1-cleaned](./graphs/df-2020-10k-item1-cleaned.png)
+
+<div style="page-break-after: always;"></div>
+
 #### <font size = 5>D. Keyword Analysis</font>
 ##### <font size = 4>1. Merge 10-K Data with Firm Data</font>
 Since 10-K data contains only the 10-K data for firms in 2020, we used `gvkey` and `year` key to perform an inner join with `df_focal_public_firms` on its `gvkey` and `fyear` key to create a new data frame named `df_filtered`. The new data frame contains 53 records and 11 columns.
@@ -345,6 +362,13 @@ def get_top_keywords(text):
     words.append(pair[0])
   return ' '.join(x[0] for x in c.most_common(10))
 ```
+
+<div style="page-break-after: always;"></div>
+
+The head of the `df_filtered['top_10_keywords_count']` looks like this:
+
+![top-key-words-wc](./graphs/top-key-words-wc.jpg)
+
 ###### <font size = 3>Method 2: TF-IDF</font>
 We also followed course material in this step. The function used `TfidfVectorizer` from `sklearn` package to calculate the TF-IDF matrix for each firm. Then we used `get_feature_names()` method to get the feature names  (words) that correspond to each column in the TF-IDF matrix. The function then loop through each document in `document_list` and perform following steps to get the top 10 keywords for each firm:
   1. Extracts the non-zero elements of the TF-IDF matrix for the current document using the nonzero() method.
@@ -386,6 +410,11 @@ def get_keywords_tfidf(document_list):
 
   return top_keywords
 ```
+
+The head of the `df_filtered['top_10_keywords_tfidf']` looks like this:
+
+![top-key-words-tf-idf](./graphs/top-key-words-tf-idf.png)
+
 ##### <font size = 4>3. Wordcloud Generation</font>
 We first defined an UDF for wordcloud generation to improve code reuseability:
 ```{python}
@@ -408,8 +437,6 @@ Then we utilized the UDF and key words extracted in the previous steps to genera
 #### <font size = 5>E. Word Embedding</font>
 ##### <font size = 4>1. Train Word2Vec Model</font>
 Consider the time consumption of training the `Word2Vec` model each time, we created an function to load the model if it's already trained and saved in the `data` folder. Otherwise, the function will train the model with cleaned text in full 10-K sample and save it to the `data` folder.
-
-<div style="page-break-after: always;"></div>
 
 ```{python}
 def get_model(sent):
@@ -468,6 +495,8 @@ We also visulized the market share of each firm with a pie chart:
 
 ![market share](./graphs/market-share.png)
 
+<div style="page-break-after: always;"></div>
+
 ###### <font size = 3>3. Analyze Focal Firm's Historical Performance</font>
 Based on `df_focal_public_firms` we created new data frame `df_focal_firm_historical` containing the focal firm's historical `prcc_c`, `roa`, `sale`, and `asset` data with `fyear`.
 ```{python}
@@ -483,8 +512,6 @@ Then we visualized the focal firm's historical performance with line charts:
 ![revenue-over-time](./graphs/revenue-over-time.png)
 
 ![asset-over-time](./graphs/asset-over-time.png)
-
-<div style="page-break-after: always;"></div>
 
 #### <font size = 4>Part II. Data Analysis and Strategy Suggestions</font>
 
@@ -502,6 +529,8 @@ Then we visualized the focal firm's historical performance with line charts:
 | 44    | SYSCO CORP                       | 52893.310    | 0.009522   | 0.506504      |
 | 45    | UNITED NATURAL FOODS INC         | 26514.267    | -0.036133  | 0.253900      |
 
+
+<div style="page-break-after: always;"></div>
 
 ##### <font size = 3>Section 2. Competitive Analysis</font>
 
@@ -543,3 +572,6 @@ This enhanced analysis provides a more detailed perspective of each firm's posit
 * **Focus on Sustainability and ESG**: Given the current global trend, Sysco can further differentiate itself by integrating sustainability into its operations and committing to Environmental, Social, and Governance (ESG) goals.
 
 In conclusion, Sysco's dominance in the wholesale non-durable goods industry is clear. However, continuously refining strategies based on competition analysis is essential to maintain and expand its leadership position.
+
+---
+**This is the end of the report. Thank you!**
